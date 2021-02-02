@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class FindPrice {
+public class Mobile {
     public List<Information> information = new ArrayList<>();
     public Connection connection = null;
 
@@ -54,7 +54,6 @@ public class FindPrice {
             }
         }
     }
-
     public void findPrice(int x) {
         byte choose = 0;
         byte count=0;
@@ -78,6 +77,24 @@ public class FindPrice {
             }
             if(count==0) System.out.println("Không có sản phẩm nào phù hợp");
         }
+    }
+    public void findHardMaker(String x,String y){
+        byte count=0;
+        for (Information inf: information){
+            if(x.equalsIgnoreCase("ssd")==true){
+                if(inf.getSsd()!=null&&inf.getMaker().equalsIgnoreCase(y)){
+                    System.out.println(inf.toString());
+                    count++;
+                }
+            }
+            else{
+                if (inf.getSsd() == null&&inf.getMaker().equalsIgnoreCase(y)) {
+                    System.out.println(inf.toString());
+                    count++;
+                }
+            }
+        }
+        if(count==0) System.out.println("Không có sản phẩm phù hợp");
     }
 }
 
