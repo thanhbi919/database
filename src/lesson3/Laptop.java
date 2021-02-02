@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class Mobile {
+public class Laptop {
     public List<Information> information = new ArrayList<>();
     public Connection connection = null;
 
@@ -60,7 +60,7 @@ public class Mobile {
         byte choose = 0;
         byte count=0;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("nhap 1 để tìm các điện thoại có giá từ " + x + ",nhập 0 để lấy các điện thoại có giá nhỏ hơn"+x+": ");
+        System.out.println("nhap 1 để tìm các Laptop có giá từ " + x + ",nhập 0 để lấy các Laptop có giá nhỏ hơn "+x+": ");
         choose = scanner.nextByte();
         if (choose == 1) {
             for (Information inf : information) {
