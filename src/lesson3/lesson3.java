@@ -1,3 +1,5 @@
+package lesson3;
+
 import java.sql.SQLException;
 
 public class lesson3 {

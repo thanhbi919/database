@@ -1,3 +1,5 @@
+package lesson3;
+
 public class Information {
     private String name;
     private String maker;
