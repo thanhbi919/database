@@ -15,6 +15,18 @@ CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
 -- -----------------------------------------------------
+-- Table `mydb`.`hdxuat`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`hdxuat` (
+  `SOHD` INT NOT NULL,
+  `NGAYBAN` DATE NULL DEFAULT NULL,
+  `TENNMH` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`SOHD`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `mydb`.`mathang`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`mathang` (
@@ -29,40 +41,63 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`hdxuat`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`hdxuat` (
-  `SOHD` INT NOT NULL,
-  `NGAYBAN` DATE NULL DEFAULT NULL,
-  `TENNMH` VARCHAR(45) NULL DEFAULT NULL,
-  `MATHANG_Mã MH` VARCHAR(10) NOT NULL,
-  PRIMARY KEY (`SOHD`),
-  INDEX `fk_HDXUAT_MATHANG1_idx` (`MATHANG_Mã MH` ASC) VISIBLE,
-  CONSTRAINT `fk_HDXUAT_MATHANG1`
-    FOREIGN KEY (`MATHANG_Mã MH`)
-    REFERENCES `mydb`.`mathang` (`Mã MH`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `mydb`.`phieunhap`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`phieunhap` (
   `SP` VARCHAR(10) NOT NULL,
   `NGAYNHAP` DATE NULL DEFAULT NULL,
   `TENNCC` VARCHAR(45) NULL DEFAULT NULL,
-  `MATHANG_Mã MH` VARCHAR(10) NOT NULL,
-  PRIMARY KEY (`SP`),
-  INDEX `fk_PHIEUNHAP_MATHANG_idx` (`MATHANG_Mã MH` ASC) VISIBLE,
-  CONSTRAINT `fk_PHIEUNHAP_MATHANG`
-    FOREIGN KEY (`MATHANG_Mã MH`)
-    REFERENCES `mydb`.`mathang` (`Mã MH`))
+  PRIMARY KEY (`SP`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`nhap_hang`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`nhap_hang` (
+  `so_luong` INT NULL,
+  `don_gia` VARCHAR(45) NULL,
+  `mathang_Mã MH` VARCHAR(10) NOT NULL,
+  `phieunhap_SP` VARCHAR(10) NOT NULL,
+  INDEX `fk_nhap_hang_mathang_idx` (`mathang_Mã MH` ASC) VISIBLE,
+  INDEX `fk_nhap_hang_phieunhap1_idx` (`phieunhap_SP` ASC) VISIBLE,
+  CONSTRAINT `fk_nhap_hang_mathang`
+    FOREIGN KEY (`mathang_Mã MH`)
+    REFERENCES `mydb`.`mathang` (`Mã MH`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_nhap_hang_phieunhap1`
+    FOREIGN KEY (`phieunhap_SP`)
+    REFERENCES `mydb`.`phieunhap` (`SP`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`xuat_hang`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`xuat_hang` (
+  `so_luong` INT NULL,
+  `don_gia` VARCHAR(45) NULL,
+  `mathang_Mã MH` VARCHAR(10) NOT NULL,
+  `hdxuat_SOHD` INT NOT NULL,
+  INDEX `fk_xuat_hang_mathang1_idx` (`mathang_Mã MH` ASC) VISIBLE,
+  INDEX `fk_xuat_hang_hdxuat1_idx` (`hdxuat_SOHD` ASC) VISIBLE,
+  CONSTRAINT `fk_xuat_hang_mathang1`
+    FOREIGN KEY (`mathang_Mã MH`)
+    REFERENCES `mydb`.`mathang` (`Mã MH`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_xuat_hang_hdxuat1`
+    FOREIGN KEY (`hdxuat_SOHD`)
+    REFERENCES `mydb`.`hdxuat` (`SOHD`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
